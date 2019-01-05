@@ -4,6 +4,8 @@ val GerritVersion = "2.11.5"
 
 version := GerritVersion + "-1"
 
+scalaVersion := "2.12.8"
+
 javacOptions ++= Seq("-source", "1.7", "-target", "1.7")
 
 libraryDependencies += ("com.google.gerrit" % "gerrit-plugin-api" % GerritVersion % "provided")

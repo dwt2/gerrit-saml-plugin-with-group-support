@@ -10,7 +10,9 @@ javacOptions ++= Seq("-source", "1.7", "-target", "1.7")
 
 libraryDependencies += ("com.google.gerrit" % "gerrit-plugin-api" % GerritVersion % "provided")
 
-libraryDependencies += "org.pac4j" % "pac4j-saml" % "2.0.0-RC1"
+libraryDependencies += "org.pac4j" % "pac4j-saml" % "3.4.0"
+
+resolvers += "Shibboleth" at "https://build.shibboleth.net/nexus/content/repositories/releases/"
 
 libraryDependencies ~= { _ map {
   case m => m

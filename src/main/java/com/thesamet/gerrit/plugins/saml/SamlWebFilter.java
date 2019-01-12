@@ -169,7 +169,7 @@ class SamlWebFilter implements Filter {
       } else {
         chain.doFilter(httpRequest, httpResponse);
       }
-    } catch (final HttpAction httpAction) {
+    } catch (HttpAction httpAction) {
       // In pac4j v3.4.0 SLO (Single Log Out) throws HttpAction with code 200.
       // Detect that flow and recover by redirecting to the main gerrit page.
       if (httpAction.getCode() != 200) {
@@ -255,7 +255,7 @@ class SamlWebFilter implements Filter {
 
     @Override
     public Enumeration<String> getHeaderNames() {
-      final Enumeration<String> wrappedHeaderNames = super.getHeaderNames();
+      Enumeration<String> wrappedHeaderNames = super.getHeaderNames();
       HashSet<String> headerNames = new HashSet<>(authHeaders);
       while (wrappedHeaderNames.hasMoreElements()) {
         headerNames.add(wrappedHeaderNames.nextElement());
@@ -287,7 +287,7 @@ class SamlWebFilter implements Filter {
 
     @Override
     public Enumeration<String> getHeaderNames() {
-      final Enumeration<String> wrappedHeaderNames = super.getHeaderNames();
+      Enumeration<String> wrappedHeaderNames = super.getHeaderNames();
 
       HashSet<String> headerNames = new HashSet<>();
       while (wrappedHeaderNames.hasMoreElements()) {

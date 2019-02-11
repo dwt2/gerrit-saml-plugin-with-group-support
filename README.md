@@ -40,17 +40,15 @@ You can then [go here](doc/Setup_ADFS.md) for more details on how to make the sa
 
 ### Download the plugin
 
-Download Gerrit SAML plugin for the appropriate version of gerrit:
-
-- [gerrit-saml-plugin-2.12-1.jar](https://bintray.com/artifact/download/thesamet/maven/gerrit-saml-plugin-2.12-1.jar) and put it in $gerrit_site/lib/.
-- [gerrit-saml-plugin-2.11.5-1.jar](https://bintray.com/artifact/download/thesamet/maven/gerrit-saml-plugin-2.11.5-1.jar) and put it in $gerrit_site/lib/.
+Download Gerrit SAML plugin for the appropriate version of gerrit from the [Gerrit-CI](https://gerrit-ci.gerritforge.com/search/?q=saml)
+into $gerrit_site/lib/.
 
 ### Configure Gerrit to use the SAML filter:
 In `$site_path/etc/gerrit.config` file, the `[httpd]` section should contain
 
 ```
 [httpd]
-    filterClass = com.thesamet.gerrit.plugins.saml.SamlWebFilter
+    filterClass = com.googlesource.gerrit.plugins.saml.SamlWebFilter
 ```
 
 ### Configure HTTP authentication for Gerrit:

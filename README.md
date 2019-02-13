@@ -1,6 +1,6 @@
-# Gerrit SAML Plugin
+# Gerrit SAML Authentication Filter
 
-This plugin allows you to authenticate to Gerrit using a SAML identity
+This filter allows you to authenticate to Gerrit using a SAML identity
 provider.
 
 ## Installation
@@ -42,6 +42,55 @@ You can then [go here](doc/Setup_ADFS.md) for more details on how to make the sa
 
 Download Gerrit SAML plugin for the appropriate version of gerrit from the [Gerrit-CI](https://gerrit-ci.gerritforge.com/search/?q=saml)
 into $gerrit_site/lib/.
+
+### Building the SAML filter
+
+This authentication filter is built with Bazel.
+
+## Build in Gerrit tree
+
+Clone or link this filter to the plugins directory of Gerrit's
+source tree. Put the external dependency Bazel build file into
+the Gerrit /plugins directory, replacing the existing empty one.
+
+```
+  cd gerrit/plugins
+  rm external_plugin_deps.bzl
+  ln -s @PLUGIN@/external_plugin_deps.bzl .
+```
+
+Then issue
+
+```
+  bazel build plugins/@PLUGIN@
+```
+
+The output is created in
+
+```
+  bazel-genfiles/plugins/@PLUGIN@/@PLUGIN@.jar
+```
+
+The @PLUGIN@.jar should be deployed to `gerrit_site/lib` directory:
+
+```
+ cp bazel-genfiles/plugins/@PLUGIN@/@PLUGIN@.jar `$gerrit_site/lib`
+```
+
+__NOTE__: Even though the project is build as a Gerrit plugin, it must be loaded
+as a Servlet filter by Gerrit and thus needs to be located with the libraries and
+cannot be dynamically loaded like other plugins.
+
+This project can be imported into the Eclipse IDE.
+Add the plugin name to the `CUSTOM_PLUGINS` set in
+Gerrit core in `tools/bzl/plugins.bzl`, and execute:
+
+```
+  ./tools/eclipse/project.py
+```
+
+How to build the Gerrit Plugin API is described in the [Gerrit documentation](../../../Documentation/dev-bazel.html#_extension_and_plugin_api_jar_files).
+
 
 ### Configure Gerrit to use the SAML filter:
 In `$site_path/etc/gerrit.config` file, the `[httpd]` section should contain

@@ -59,7 +59,7 @@ The @PLUGIN@.jar should be deployed to `gerrit_site/lib` directory:
  cp bazel-genfiles/plugins/@PLUGIN@/@PLUGIN@.jar `$gerrit_site/lib`
 ```
 
-__NOTE__: Even though the project is build as a Gerrit plugin, it must be loaded
+__NOTE__: Even though the project is built as a Gerrit plugin, it must be loaded
 as a Servlet filter by Gerrit and thus needs to be located with the libraries and
 cannot be dynamically loaded like other plugins.
 

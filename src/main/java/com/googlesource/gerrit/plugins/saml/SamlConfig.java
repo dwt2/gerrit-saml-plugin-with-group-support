@@ -37,6 +37,7 @@ public class SamlConfig {
   private final String firstNameAttr;
   private final String lastNameAttr;
   private final int maxAuthLifetimeDefault = 24 * 60 * 60; // 24h;
+  private final boolean useNameQualifier;
 
   @Inject
   SamlConfig(@GerritServerConfig Config cfg) {
@@ -52,6 +53,7 @@ public class SamlConfig {
     computedDisplayName = cfg.getBoolean(SAML_SECTION, "computedDisplayName", false);
     firstNameAttr = getGetStringWithDefault(cfg, "firstNameAttr", "FirstName");
     lastNameAttr = getGetStringWithDefault(cfg, "lastNameAttr", "LastName");
+    useNameQualifier = cfg.getBoolean(SAML_SECTION, "useNameQualifier", true);
   }
 
   public String getMetadataPath() {
@@ -112,5 +114,9 @@ public class SamlConfig {
 
   public String getServiceProviderEntityId() {
     return serviceProviderEntityId;
+  }
+
+  public boolean useNameQualifier() {
+    return useNameQualifier;
   }
 }

@@ -182,3 +182,7 @@ Default is `UserName`
 **saml.serviceProviderEntityId**: Saml service provider entity id
 
 Default is not set.
+
+**saml.useNameQualifier**: By SAML specification, the authentication request must not contain a NameQualifier, if the SP entity is in the format nameid-format:entity. However, some IdP require that information to be present. You can force a NameQualifier in the request with the useNameQualifier parameter. For ADFS 3.0 support, set this to `false`.
+
+Default is true.

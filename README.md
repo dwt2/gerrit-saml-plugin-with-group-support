@@ -50,13 +50,13 @@ Then issue
 The output is created in
 
 ```
-  bazel-genfiles/plugins/@PLUGIN@/@PLUGIN@.jar
+  bazel-bin/plugins/@PLUGIN@/@PLUGIN@.jar
 ```
 
 The @PLUGIN@.jar should be deployed to `gerrit_site/lib` directory:
 
 ```
- cp bazel-genfiles/plugins/@PLUGIN@/@PLUGIN@.jar `$gerrit_site/lib`
+ cp bazel-bin/plugins/@PLUGIN@/@PLUGIN@.jar `$gerrit_site/lib`
 ```
 
 __NOTE__: Even though the project is built as a Gerrit plugin, it must be loaded

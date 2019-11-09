@@ -2,9 +2,9 @@ load("//tools/bzl:maven_jar.bzl", "maven_jar")
 
 SHIBBOLETH = "https://build.shibboleth.net/nexus/content/repositories/releases/"
 
-OPENSAML_VERSION = "3.4.2"
+OPENSAML_VERSION = "3.4.3"
 
-PAC4J_VERSION = "3.6.1"
+PAC4J_VERSION = "3.8.0"
 
 def external_plugin_deps():
     # Transitive dependency of velocity
@@ -29,111 +29,111 @@ def external_plugin_deps():
     maven_jar(
         name = "opensaml-core",
         artifact = "org.opensaml:opensaml-core:" + OPENSAML_VERSION,
-        sha1 = "d7bfd76283b4b12074f9a6b866ce048d793390a6",
+        sha1 = "406eedd86ea88c1442a6b1c7625a45cf696b9f55",
         repository = SHIBBOLETH,
     )
 
     maven_jar(
         name = "opensaml-saml-api",
         artifact = "org.opensaml:opensaml-saml-api:" + OPENSAML_VERSION,
-        sha1 = "e8e1034cfdee26267d4e5aacc1ab7682cb03ddb8",
+        sha1 = "b2c68a7265e8b059ecbfff0ac6525720cd3e1a86",
         repository = SHIBBOLETH,
     )
 
     maven_jar(
         name = "opensaml-storage-api",
         artifact = "org.opensaml:opensaml-storage-api:" + OPENSAML_VERSION,
-        sha1 = "f562d624a35e5aeb2ba21222f54a5bbcc02a74ce",
+        sha1 = "80ff32a3df660fe71527f293a317813c51375dcc",
         repository = SHIBBOLETH,
     )
 
     maven_jar(
         name = "opensaml-saml-impl",
         artifact = "org.opensaml:opensaml-saml-impl:" + OPENSAML_VERSION,
-        sha1 = "76f1e54ded6ba903a30af54f37494f249cf38f17",
+        sha1 = "c4bce04bec8fd065bbc014a2c4003172ec612ba6",
         repository = SHIBBOLETH,
     )
 
     maven_jar(
         name = "opensaml-soap-impl",
         artifact = "org.opensaml:opensaml-soap-impl:" + OPENSAML_VERSION,
-        sha1 = "ecfcf4431dcff6dc57744e0bfca151efc87b96fc",
+        sha1 = "9a1b9bc0ed6a0c62f3f607cc2c1164c76a57303e",
         repository = SHIBBOLETH,
     )
 
     maven_jar(
         name = "opensaml-soap-api",
         artifact = "org.opensaml:opensaml-soap-api:" + OPENSAML_VERSION,
-        sha1 = "22566f94af9687b5935cce64dbec1ccc8c80eb6f",
+        sha1 = "4fe18269fff79f7172d9dbe0d421886282baa434",
         repository = SHIBBOLETH,
     )
 
     maven_jar(
         name = "opensaml-xmlsec-api",
         artifact = "org.opensaml:opensaml-xmlsec-api:" + OPENSAML_VERSION,
-        sha1 = "4f96eebc87f81341ea121afaceae83a5e3f13dd4",
+        sha1 = "b7f0f8a9c17997008bcef75a8886faeb5e9d9ea9",
         repository = SHIBBOLETH,
     )
 
     maven_jar(
         name = "opensaml-xmlsec-impl",
         artifact = "org.opensaml:opensaml-xmlsec-impl:" + OPENSAML_VERSION,
-        sha1 = "0e4d4df9809423b2ec386411480afa7c48320919",
+        sha1 = "3dbdf38773a07d37f013dc9a2ecc4d0295a724de",
         repository = SHIBBOLETH,
     )
 
     maven_jar(
         name = "opensaml-security-api",
         artifact = "org.opensaml:opensaml-security-api:" + OPENSAML_VERSION,
-        sha1 = "bd4502769741b7d2c513f0051bb46da8d4e6f5c0",
+        sha1 = "b6878bd144c15612ab899643e561e52f04d332c1",
         repository = SHIBBOLETH,
     )
 
     maven_jar(
         name = "opensaml-security-impl",
         artifact = "org.opensaml:opensaml-security-impl:" + OPENSAML_VERSION,
-        sha1 = "f4e6bf165291f46c5f7ba267b0c4854bbe058e41",
+        sha1 = "72edf27dbce57ed29aebab8563a41942f7f15527",
         repository = SHIBBOLETH,
     )
 
     maven_jar(
         name = "opensaml-profile-api",
         artifact = "org.opensaml:opensaml-profile-api:" + OPENSAML_VERSION,
-        sha1 = "b6a56330992f7ec400411f2efa19fd5115675b07",
+        sha1 = "8daff1c6b7ff47178054e17e78b0d4b19b622434",
         repository = SHIBBOLETH,
     )
 
     maven_jar(
         name = "opensaml-profile-impl",
         artifact = "org.opensaml:opensaml-profile-impl:" + OPENSAML_VERSION,
-        sha1 = "61b086e39649664cdd93b5863cafb0e1042a6bea",
+        sha1 = "175bd3d0ba07a17f0222ea799c3971119c9b32b3",
         repository = SHIBBOLETH,
     )
 
     maven_jar(
         name = "opensaml-messaging-api",
         artifact = "org.opensaml:opensaml-messaging-api:" + OPENSAML_VERSION,
-        sha1 = "a2b4f5e7862979d1e769ba262ded93b6d87cc029",
+        sha1 = "18f68283a3729e4355a29936861f6472ab20b2be",
         repository = SHIBBOLETH,
     )
 
     maven_jar(
         name = "opensaml-messaging-impl",
         artifact = "org.opensaml:opensaml-messaging-impl:" + OPENSAML_VERSION,
-        sha1 = "cd622191c79020c89dd51066790facae8a57f26d",
+        sha1 = "d0cd65f2b0a167dc25477245adf5417a8735e132",
         repository = SHIBBOLETH,
     )
 
     maven_jar(
         name = "pac4j-saml",
         artifact = "org.pac4j:pac4j-saml:" + PAC4J_VERSION,
-        sha1 = "7e62141587aea14c2e1dbcbf5558319cc3896fc0",
+        sha1 = "6897faedf4131f71954963945e4dbc13788d8d22",
     )
 
     maven_jar(
         name = "pac4j-core",
         artifact = "org.pac4j:pac4j-core:" + PAC4J_VERSION,
-        sha1 = "4d60b8c1f9138ec673c1595b82016408b1f41ec3",
+        sha1 = "e5a82ad0a4a0e246edc8950d1e2c632a36732715",
     )
 
     maven_jar(
@@ -152,8 +152,8 @@ def external_plugin_deps():
 
     maven_jar(
         name = "santuario-xmlsec",
-        artifact = "org.apache.santuario:xmlsec:2.0.10",
-        sha1 = "57865d2fbaf65f27c6cb8e909e37842e5cb87960",
+        artifact = "org.apache.santuario:xmlsec:2.1.4",
+        sha1 = "cb43326f02e3e77526c24269c8b5d3cc3f7f6653",
     )
 
     maven_jar(

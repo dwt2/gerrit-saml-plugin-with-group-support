@@ -21,6 +21,7 @@ gerrit_plugin(
         "@opensaml-soap-api//jar",
         "@opensaml-soap-impl//jar",
         "@opensaml-storage-api//jar",
+        "@opensaml-storage-impl//jar",
         "@opensaml-xmlsec-api//jar",
         "@opensaml-xmlsec-impl//jar",
         "@pac4j-core//jar",

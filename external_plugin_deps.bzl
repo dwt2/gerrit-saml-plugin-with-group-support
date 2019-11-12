@@ -35,6 +35,13 @@ def external_plugin_deps():
     )
 
     maven_jar(
+        name = "opensaml-storage-impl",
+        artifact = "org.opensaml:opensaml-storage-impl:" + OPENSAML_VERSION,
+        sha1 = "da2116186a10ba5e1adecf2445184bf1feb1aa1c",
+        repository = SHIBBOLETH,
+    )
+
+    maven_jar(
         name = "opensaml-saml-impl",
         artifact = "org.opensaml:opensaml-saml-impl:" + OPENSAML_VERSION,
         sha1 = "c4bce04bec8fd065bbc014a2c4003172ec612ba6",

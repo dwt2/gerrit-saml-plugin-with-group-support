@@ -21,12 +21,14 @@ public class AuthenticatedUser implements java.io.Serializable {
   private final String displayName;
   private final String email;
   private final String externalId;
+  private final String groups;
 
-  public AuthenticatedUser(String username, String displayName, String email, String externalId) {
+  public AuthenticatedUser(String username, String displayName, String email, String externalId, String groups) {
     this.username = username;
     this.displayName = displayName;
     this.email = email;
     this.externalId = externalId;
+    this.groups = groups;
   }
 
   public String getUsername() {
@@ -45,6 +47,10 @@ public class AuthenticatedUser implements java.io.Serializable {
     return externalId;
   }
 
+  public String getGroups() {
+    return groups;
+  }
+
   @Override
   public String toString() {
     return "AuthenticatedUser{"
@@ -59,6 +65,9 @@ public class AuthenticatedUser implements java.io.Serializable {
         + '\''
         + ", externalId='"
         + externalId
+        + '\''
+        + ", groups='"
+        + groups
         + '\''
         + '}';
   }

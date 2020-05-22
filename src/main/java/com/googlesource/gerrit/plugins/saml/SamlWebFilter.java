@@ -49,12 +49,12 @@ import org.pac4j.saml.config.SAML2Configuration;
 import org.pac4j.saml.credentials.SAML2Credentials;
 import org.pac4j.saml.profile.SAML2Profile;
 import org.pac4j.saml.state.SAML2StateGenerator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.google.common.flogger.FluentLogger;
 
 @Singleton
 class SamlWebFilter implements Filter {
-  private static final Logger log = LoggerFactory.getLogger(SamlWebFilter.class);
+  //private static final Logger log = LoggerFactory.getLogger(SamlWebFilter.class);
+  private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   private static final String GERRIT_LOGOUT = "/logout";
   private static final String GERRIT_LOGIN = "/login";
@@ -69,12 +69,15 @@ class SamlWebFilter implements Filter {
   private final String httpEmailHeader;
   private final String httpExternalIdHeader;
   private final HashSet<String> authHeaders;
+  private final SamlMembership samlMembership;
 
   @Inject
-  SamlWebFilter(@GerritServerConfig Config gerritConfig, SitePaths sitePaths, SamlConfig samlConfig)
+  SamlWebFilter(@GerritServerConfig Config gerritConfig, SitePaths sitePaths, SamlConfig samlConfig,
+                SamlMembership samlMembership)
       throws IOException {
     this.samlConfig = samlConfig;
-    log.debug("Max Authentication Lifetime: " + samlConfig.getMaxAuthLifetimeAttr());
+    this.samlMembership = samlMembership;
+    logger.atFinest().log("Max Authentication Lifetime: " + samlConfig.getMaxAuthLifetimeAttr());
     SAML2Configuration samlClientConfig =
         new SAML2Configuration(
             samlConfig.getKeystorePath(), samlConfig.getKeystorePassword(),
@@ -165,19 +168,27 @@ class SamlWebFilter implements Filter {
   private void signin(J2EContext context) throws HttpAction, IOException {
     SAML2Credentials credentials = saml2Client.getCredentials(context);
     SAML2Profile user = saml2Client.getUserProfile(credentials, context);
+
     if (user != null) {
-      log.debug(
+      logger.atFinest().log(
           "Received SAML callback for userId={} with attributes: {}",
           getUserName(user),
           user.getAttributes());
       HttpSession s = context.getRequest().getSession();
-      s.setAttribute(
-          SESSION_ATTR_USER,
-          new AuthenticatedUser(
-              getUserName(user),
-              getDisplayName(user),
-              getEmailAddress(user),
-              String.format("%s/%s", SAML, user.getId())));
+      AuthenticatedUser authenticatedUser = new AuthenticatedUser(
+          getUserName(user),
+          getDisplayName(user),
+          getEmailAddress(user),
+          getMemberships(user),
+          String.format("%s/%s", SAML, user.getId()));
+      s.setAttribute(SESSION_ATTR_USER, authenticatedUser);
+
+
+      // synch membership, shit doesn't work though
+      //logger.atInfo().log("user info: " + user.toString());
+      logger.atInfo().log("authenticated user info: " + authenticatedUser.toString());
+
+      samlMembership.sync(authenticatedUser, user);
 
       String redirectUri = context.getRequest().getParameter("RelayState");
       if (null == redirectUri || redirectUri.isEmpty()) {
@@ -197,7 +208,7 @@ class SamlWebFilter implements Filter {
     @SuppressWarnings("unchecked")
     SessionStore<J2EContext> store = context.getSessionStore();
     store.set(context, SAML2StateGenerator.SAML_RELAY_STATE_ATTRIBUTE, redirectUri);
-    log.debug("Setting redirectUri: {}", redirectUri);
+    logger.atFinest().log("Setting redirectUri: {}", redirectUri);
     saml2Client.redirect(context);
   }
 
@@ -252,7 +263,7 @@ class SamlWebFilter implements Filter {
     }
     String nameId = user.getId();
     if (!nameId.contains("@")) {
-      log.debug(
+      logger.atFinest().log(
           "Email address attribute not found, NameId {} does not look like an email.", nameId);
       return null;
     }
@@ -261,6 +272,10 @@ class SamlWebFilter implements Filter {
 
   private String getUserName(SAML2Profile user) {
     return getAttributeOrElseId(user, samlConfig.getUserNameAttr());
+  }
+
+  private String getMemberships(SAML2Profile user) {
+    return getAttributeOrElseId(user, samlConfig.getMemberOfAttr());
   }
 
   private static Path ensureExists(Path dataDir) throws IOException {

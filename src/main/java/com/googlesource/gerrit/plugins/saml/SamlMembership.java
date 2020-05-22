@@ -3,11 +3,11 @@ package com.googlesource.gerrit.plugins.saml;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import com.google.gerrit.reviewdb.client.Account;
-import com.google.gerrit.reviewdb.client.AccountGroup;
+import com.google.gerrit.entities.Account;
+import com.google.gerrit.entities.AccountGroup;
 import com.google.gerrit.server.GerritPersonIdent;
 import com.google.gerrit.server.IdentifiedUser;
-import com.google.gerrit.server.Sequences;
+import com.google.gerrit.server.notedb.Sequences;
 import com.google.gerrit.server.ServerInitiated;
 import com.google.gerrit.server.account.*;
 import com.google.gerrit.server.group.InternalGroup;
@@ -119,7 +119,8 @@ public class SamlMembership {
 
   private InternalGroup createGroup(AccountGroup.NameKey name, String samlGroup) {
     try {
-      AccountGroup.Id groupId = new AccountGroup.Id(sequences.nextGroupId());
+      //AccountGroup.Id groupId = new AccountGroup.Id(sequences.nextGroupId());
+      AccountGroup.Id groupId = AccountGroup.id(sequences.nextGroupId());
       AccountGroup.UUID uuid = GroupUUID.make(name.get(), serverIdent);
       InternalGroupCreation groupCreation =
           InternalGroupCreation.builder()
@@ -141,7 +142,7 @@ public class SamlMembership {
     return Optional.of(id)
         .filter(s -> !s.isEmpty())
         .map(GROUP_PREFIX::concat)
-        .map(AccountGroup.NameKey::new);
+        .map(AccountGroup::nameKey);
   }
 
   private Account.Id getOrCreateAccountId(AuthenticatedUser user) throws IOException {
